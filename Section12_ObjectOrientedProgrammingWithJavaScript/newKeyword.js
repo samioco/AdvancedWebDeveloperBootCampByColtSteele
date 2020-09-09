@@ -30,3 +30,37 @@ var rusty = new Dog("Rusty", 3);
 var fido = new Dog("Fido", 1);
 rusty.bark() // Rusty barks!
 fido.bark() // Fido barks!
+
+
+
+// Using call / apply
+
+function Vehicle(make, model, year){
+  this.make = make;
+  this.model = model;
+  this.year = year;
+  this.numWheels = 4;
+}
+
+function Car(make, model, year){
+  Vehicle.call(this, make, model, year);
+  this.numWheels = 4;
+}
+function Motorcycle(make, model, year){
+  Vehicle.apply(this, [make, model, year]);
+  this.numWheels = 2;
+}
+
+// without params, using arguments
+function Motorcycle(){
+  Vehicle.apply(this, arguments);
+  this.numWheels = 2;
+}
+
+// OOP: object oriented programming based on objects constructed from a blueprint.
+// Used to write modular and shareable code
+
+// Languages with built-in OOP: classes, and objects: instances
+// Languages without built-in OOP like JavaScript, we mimic classes by using constructor functions
+// Create objects using keyword 'new'
+// Avoid duplicated code in constructor functions through use of call/apply

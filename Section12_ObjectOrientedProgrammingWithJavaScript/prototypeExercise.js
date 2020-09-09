@@ -42,7 +42,7 @@ Examples:
 Person.prototype.addToFamily = function(familyMember){
   if (familyMember instanceof Person && this.family.indexOf(familyMember)===-1){
     this.family.push(familyMember);
-    return this.family.length();
+    return this.family.length;
   }
 }
 
@@ -50,9 +50,25 @@ Person.prototype.addToFamily = function(familyMember){
 
 // 1 - Implement your own version of Array.prototype.map. The function should accept a callback and return a new array with the result of the callback for each value in the array.
 
+Array.prototype.map = function(callback){
+  var newArr = [];
+  for (var i = 0; i<this.length; i++){
+    newArr.push(callback(this[i], i, this));
+  }
+  return newArr;
+}
+
 /* 2 - Implement a function called reverse that reverses a string and place it on the String.prototype
 
 Examples:
     "test".reverse() // "tset"
     "tacocat".reverse() // "tacocat"
 */
+
+String.prototype.reverse = function(){
+  var newStr = '';
+  for (var i = this.length-1; i>=0; i--){
+    newStr += this[i];
+  }
+  return newStr;
+}
