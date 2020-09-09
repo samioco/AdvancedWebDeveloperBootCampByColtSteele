@@ -44,16 +44,21 @@ Examples (yours might not be like this, since the answer is random every time):
 function guessingGame(amount){
   var answer = Math.floor(Math.random() * Math.floor(amount));
   var guesses = 0;
+  var completed = false;
   return function inner(guess){
-    guesses++;
-    if (guesses>amount){
-      return "You are all done playing!";
-    } else if (guess === answer){
-      return "You got it!";
-    } else if (guess > answer){
-      return "You're too high!";
-    } else if (guess < answer){
-      return "You're too low!";
+    if (!completed){
+      guesses++;
+      if (guess === answer) {
+        completed = true;
+        return "You got it!";
+      }
+      else if (guess > answer) return "You're too high!";
+      else if (guess < answer) return "You're too low!";
+      else if (guesses===amount){
+        completed = true;
+        return "No more guesses. The answer was "+answer;
+      }
     }
+    return "You are all done playing!";
   }
 }
