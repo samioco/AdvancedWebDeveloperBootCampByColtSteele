@@ -40,3 +40,15 @@ function sumArguments(){
     return accumulator + nextValue;
   });
 }
+
+// ES2015
+var sumArguments = (...args) => {
+  var total = 0;
+  for (var i=0; i<args.length; i++){
+    total += args[i];
+  }
+  return total;
+}
+
+// using reduce
+var sumArguments = (...args) => args.reduce((acc,next) => acc+next);
