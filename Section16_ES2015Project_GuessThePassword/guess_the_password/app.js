@@ -1,26 +1,27 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   const wordCount = 10;
   let guessCount = 4;
   let password = '';
 
   let start = document.getElementById('start');
-  start.addEventListener('click', function() {
+  start.addEventListener('click', () => {
     toggleClasses(document.getElementById('start-screen'), 'hide', 'show');
     toggleClasses(document.getElementById('game-screen'), 'hide', 'show');
     startGame();
   });
 
-  function toggleClasses(element) {
-    for (let i = 1; i < arguments.length; i++) {
-      element.classList.toggle(arguments[i]);
-    }
+  function toggleClasses(element, ...classNames) {
+    // for (let i = 1; i < arguments.length; i++) {
+    //   element.classList.toggle(arguments[i]);
+    // }
+    classNames.forEach(name => element.classList.toggle(name));
   }
 
   function startGame() {
     // get random words and append them to the DOM
     let wordList = document.getElementById("word-list");
-    let randomWords = getRandomValues(words, wordCount);
-    randomWords.forEach(function(word) {
+    let randomWords = getRandomValues(words);
+    randomWords.forEach((word) => {
       let li = document.createElement("li");
       li.innerText = word;
       wordList.appendChild(li);
@@ -34,9 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
     wordList.addEventListener('click', updateGame);
   }
 
-  function getRandomValues(array, numberOfVals) {
-    return shuffle(array).slice(0, numberOfVals);
-  }
+  // function getRandomValues(array, numberOfVals) {
+  //   return shuffle(array).slice(0, numberOfVals);
+  // }
+
+  let getRandomValues = (array, numVals=wordCount) => shuffle(array).slice(0, numVals);
 
   function shuffle(array) {
     let arrayCopy = array.slice();
@@ -45,16 +48,17 @@ document.addEventListener('DOMContentLoaded', function() {
       let idx2 = Math.floor(Math.random() * (idx1 + 1));
 
       // swap elements at idx1 and idx2
-      let temp = arrayCopy[idx1];
-      arrayCopy[idx1] = arrayCopy[idx2];
-      arrayCopy[idx2] = temp;
+      // let temp = arrayCopy[idx1];
+      // arrayCopy[idx1] = arrayCopy[idx2];
+      // arrayCopy[idx2] = temp;
+      [arrayCopy[idx1], arrayCopy[idx2]] = [arrayCopy[idx2], arrayCopy[idx1]];
     }
     return arrayCopy;
   }
 
   function setGuessCount(newCount) {
     guessCount = newCount;
-    document.getElementById("guesses-remaining").innerText = "Guesses remaining: " + guessCount + ".";
+    document.getElementById("guesses-remaining").innerText = `Guesses remaining: ${guessCount}.`;
   }
 
   function updateGame(e) {
@@ -63,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function() {
       let guess = e.target.innerText;
       let similarityScore = compareWords(guess, password);
       e.target.classList.add("disabled");
-      e.target.innerText = e.target.innerText + " --> Matching Letters: " + similarityScore;
+      e.target.innerText = '${e.target.innerText} --> Matching Letters: ${similarityScore}`;
       setGuessCount(guessCount - 1);
 
       // check whether the game is over
