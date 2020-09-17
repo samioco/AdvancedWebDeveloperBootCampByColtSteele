@@ -43,3 +43,28 @@ $.getJSON('https://omdbapi.com/?t=titanic&apikey=thewdb')
   console.log(years);
 })
 console.log('Starting!');
+
+
+// Promise.all
+// fail fast behavior: accepts array of promises
+// resolves all or rejects if any are rejected
+// if all passed-in promises fulfill, Promise.all is filled with arrays of values from passed-in promises in same order
+// JQuery or Q: $.when
+// Promises don't resolve sequentially but Promise.all waits for all
+
+function getMovie(title){
+  return $.getJSON(`https://omdbapi.com?t=${title}&apikey=thewdb`);
+}
+var titanicPromise = getMovie('titanic');
+var shrekPromise = getMovie('shrek');
+var braveheartPromise = getMovie('braveheart');
+
+Promise.all([titanicPromise, shrekPromise, braveheartPromise])
+.then(function(movies){
+  return movies.forEach(function(movie){
+    console.log(`Movie: ${movie.Title} ${movie.Year}`);
+  });
+});
+// Movie: Titanic 1997
+// Movie: Shrek 2001
+// Movie: Braveheart 1995
