@@ -73,3 +73,16 @@ function displayEvenArguments(...args){
     return acc;
   }, []);
 }
+
+function displayEvenArguments(){
+  return Array.from(arguments).reduce((acc, next) => {
+    if (next%2===0) {
+      acc.push(next);
+    }
+    return acc;
+  }, []);
+}
+
+function displayEvenArguments(){
+  return Array.from(arguments).filter(val => val%2===0);
+}
