@@ -47,3 +47,10 @@ d3.select("#quotes")
     .style("font-size", d => d.quote.length < 25 ? "2em" : "1em")
     .style("background-color", d => colors[d.rating])
     .style("border-radius", "8px");
+
+// remove movies that are rated R
+var nonRQuotes = quotes.filter(movie => movie.rating !== "R");
+d3.selectAll("li")
+  .data(nonRQuotes, d => d.quote)
+  .exit()
+  .remove();
