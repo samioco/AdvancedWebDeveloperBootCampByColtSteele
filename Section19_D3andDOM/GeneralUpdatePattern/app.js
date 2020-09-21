@@ -64,16 +64,31 @@ d3.select("#quotes")
 var removeBtn = d3.select("#remove");
 
 removeBtn.on('click', function() {
-  var nonRQuotes = quotes.filter(function(movie) {
-    return movie.rating !== 'R';
-  });
-  
+  var nonRQuotes = quotes.filter(movie => movie.rating !== 'R');
   d3.selectAll("li")
-    .data(nonRQuotes, function(d) {
-      return d.quote;
-    })
+    .data(nonRQuotes, d => d.quote)
     .exit()
     .remove();
-
   removeBtn.remove();
 });
+
+var add = d3.select("#add");
+add.on("click", () => {
+  quotes = quotes.concat(newQuotes);
+  var listItems = d3.select("#quotes")
+  .selectAll("li")
+    .data(quotes);
+
+  listItems
+    .enter()
+    .append("li")
+      .text(d => '"' + d.quote + '" - ' + d.movie + ' (' + d.year + ')')
+      .style("margin", "20px")
+      .style("padding", "0px")
+      .style("font-size", d => d.quote.length < 25 ? "2em" : "1em")
+      .style("background-color", d => colors[d.rating])
+      .style("border-radius", "8px")
+    .merge(listItems)
+      .style("color", "#5599ff");
+  add.remove();
+})

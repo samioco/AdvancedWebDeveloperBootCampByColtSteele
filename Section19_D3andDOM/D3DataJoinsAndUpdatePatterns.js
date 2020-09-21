@@ -49,4 +49,13 @@ d3.selectAll("li")
   .data(nonRQuotes, d => d.quote)
   .exit()
   .remove();
-  
+
+// merging selections: merges selection and otherSelection together into new selection
+selection.merge(otherSelection)
+
+
+// General Update Pattern
+// 1. Grab update selection, make changes to selection, store selection in variable
+// 2. Grab exit selection and remove any unnecessary elements
+// 3. Grab enter selection, make changes
+// 4. Merge enter & update selections, make changes across both selections
