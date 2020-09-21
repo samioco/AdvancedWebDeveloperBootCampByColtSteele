@@ -37,7 +37,7 @@ selection.html([newValue]) // inner html
 
 // if newValue not passed in, D3 methods will perform a get
 
-selection.classed(classList [, shouldClassesBeSet]) // shouldClassesBeSet: boolean to enable or remove
+// selection.classed(classList [, shouldClassesBeSet]) // shouldClassesBeSet: boolean to enable or remove
 
 // Selections and Callbacks
 // callback invoked once for each element in selection
@@ -64,4 +64,3 @@ d3.select(".outer")
     .style("background-color", "orange")
   .select("div")
     .style("border", "8px solid blue");
-  
